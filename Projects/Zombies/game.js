@@ -431,18 +431,6 @@ window.addEventListener('keydown', function(event) { Key.onKeydown(event); }, fa
 //
 var side = Math.sqrt(50);
 
-
-var joystick  = new VirtualJoystick({
-        container : document.getElementById('container'),
-        mouseSupport  : false,
-      });
-      joystick.addEventListener('touchStart', function(){
-        console.log('down')
-      })
-      joystick.addEventListener('touchEnd', function(){
-        console.log('up')
-      })
-
 character.prototype.update = function(){
     var only = true;
     if (Key.isDown(Key.UP)){
@@ -478,18 +466,7 @@ character.prototype.update = function(){
   if (Key.isDown(Key.RIGHT) && only) this.x += this.speed;
 
   
-  if( joystick.right() ){
-        this.x += 60 * .18;    
-        }
-        if( joystick.left() ){
-        this.x -= 60 * .18;     
-        }
-        if( joystick.up() ){
-        this.y -= 60 * .18;       
-        }
-        if( joystick.down() ){
-        this.y += 60 * .18;
-        }
+
     /*if(joystick._pressed === true && !(joystick.theta() === NaN){
         this.x += this.speed*Math.sin(joystick.theta());
         this.y += this.speed*Math.cos(joystick.theta());
