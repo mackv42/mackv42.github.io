@@ -31,7 +31,7 @@ function handleResize(){ // Put into Event
     c_pos = canvas.getBoundingClientRect();
     c_x = c_pos.left;
     c_y = c_pos.top;
-}
+}//
 
 function clear(){
     context.clearRect(0, 0, canvas.width, canvas.height);
