@@ -1,0 +1,9 @@
+@media only screen and (min-width: 600px) {
+  #nav1 {
+    display: none;
+  }
+
+  #nav2{
+  	display: block;
+  }
+}

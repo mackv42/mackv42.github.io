@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pong</title>
+    <base target="_top">
+    <style>
+        *{padding: 0; margin: 0;}
+
+        canvas{ background: #e0e0e0; display: block; margin: 0 auto; margin-top: 10px; border-color: black;}
+        button{display: block; margin: 0 auto; margin-top: 10px;}
+        pre{padding-left: 10px; margin-right: 10%; margin-left: 10%; background-color: white;}
+    </style>
+
+</head>
+
+<body style="background-color: #77AAFF">
+
+    <canvas id="can" width="480" height="320"></canvas>
+    <button type="button" onclick="start();">Start</button>
+
+    <h1>Score1: <span id="score1"></span></h1>
+    <h1>Score2: <span id="score2"></span></h1>
+    <script type="text/javascript">
+        var canvas = document.getElementById("can");
+        var ctx = canvas.getContext("2d");
+        
+        var RAD = Math.PI / 180;
+        
+        var shape = function(x, y, width, height, color){
+            this.x = x;
+            this.y = y;
+            this.height = height;
+            this.width = width;
+            this.color = color;
+            this.dir = 0;
+        };
+        
+
+        shape.prototype.move = function(dx, dy){
+            this.x += dx;
+            this.y += dy;
+        };
+
+        shape.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+        };
+        
+        function inbetween(p1, p2, n){
+            if(n >= p1 && n <= p2){
+              return true;
+            }
+            
+            return false;
+        }
+
+        function clear(){
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        
+        function collision(shape1, shape2){ //make sure to use as little shape, big shape   
+            
+            if(inbetween(shape2.x, shape2.x + shape2.width, shape1.x)){
+                
+            } else if(inbetween(shape2.x, shape2.x + shape2.width, shape1.x + shape1.width)){
+                
+            } else{
+               return false;
+            }
+            
+            if(inbetween(shape2.y, shape2.y + shape2.height, shape1.y)){
+               
+            } else if(inbetween(shape2.y, shape2.y + shape2.height, shape1.y + shape1.height)){
+                
+            } else{
+               return false;
+            }
+            
+            return true;
+        }
+        
+        function getRandomArbitrary(min, max) {
+            return Math.random() * (max - min) + min;
+        }
+
+
+        var rect1 = new shape(canvas.width/2, canvas.height/2, 5, 5, '#FF0000');
+        var bar1 = new shape(0, 0, 0, 0, "#000000");
+        bar1.width = 15;
+        bar1.height = 90;
+        bar1.x = -5;
+        bar1.y = (canvas.height/2) - (bar1.height/2);
+        
+        var bar2 = new shape(0, 0, 0, 0, "#000000");
+        bar2.width = 15;
+        bar2.height = 90;
+        bar2.x = canvas.width-bar2.width+5;
+        bar2.y = (canvas.height/2) - (bar2.height/2);
+        
+        
+        var velocity = 10;
+        var dirChange = true;
+        var o=0;
+        var a=0;
+        var clicked = false;
+        
+        var score1 = 0;
+        var score2 = 0;
+        
+        function start(){
+            if(!clicked){
+                document.addEventListener("keydown", function(event){
+                    clicked = true;
+                    switch(event.keyCode){
+                       case 87:
+                         bar1.move(0, -30);
+                         break;
+                       case 83:
+                         bar1.move(0, 30);
+                         break;
+                       case 38:
+                         bar2.move(0, -30);
+                         break;
+                       case 40:
+                         bar2.move(0, 30);
+                         break;
+                       default:
+                         break;
+                    }
+                    
+                 });
+                
+                function drawLoop(){ 
+                    
+                    setTimeout(function loop(){requestAnimationFrame(drawLoop)}, 18);   //~120fps
+                    
+                    if(rect1.x + rect1.width > canvas.width){
+                        dirChange = true;
+                        rect1.x = canvas.width/2;
+                        rect1.y = canvas.height/2;
+                        rect1.dir = 180;
+                        score1++;
+                        document.getElementById("score1").innerHTML = score1;
+                        
+                        if(score1 == 21 && score2 < 21){
+                           alert("Left Side Wins!");
+                        }
+                    } else if(rect1.x < 0){
+                        dirChange = true;
+                        rect1.x = canvas.width/2;
+                        rect1.y = canvas.height/2;
+                        rect1.dir = 0;
+                        score2++;
+                        document.getElementById("score2").innerHTML = score2;
+                        
+                        if(score2 == 21 && score1 < 21){
+                           alert("Right Side Wins!");
+                        }
+                    }
+                    
+                    if(rect1.y < 0){
+                        dirChange = true;
+                        rect1.dir = -rect1.dir;
+                        rect1.move(0, 2);
+                    } else if(rect1.y + rect1.height > canvas.height){
+                        dirChange = true;
+                        rect1.dir = -rect1.dir;
+                        rect1.move(0, -2);
+                    }
+                    
+                    if(collision(rect1, bar1)){
+                        dirChange = true;
+                        rect1.dir = getRandomArbitrary(310, 410);
+                    } else if(collision(rect1, bar2)){
+                        dirChange = true;
+                        rect1.dir = getRandomArbitrary(130, 230);
+                    }
+                    
+                    if(rect1.dir > 360){
+                       rect1.dir -= 360;
+                    } else if(rect1.dir < 0){
+                       rect1.dir += 360;
+                    }
+                    
+                    //Slope doesn't change when ball doesn't hit anything
+                    if(dirChange){
+                      o = Math.sin(rect1.dir*RAD)*velocity;
+                      a = Math.cos(rect1.dir*RAD)*velocity;
+                      rect1.dir = Math.floor(rect1.dir);
+                      dirChange = false;
+                    }
+                    
+                    rect1.move(a, o); 
+                    
+                    clear();
+                    rect1.draw();
+                    bar1.draw();
+                    bar2.draw();
+                } 
+                drawLoop();
+            }
+        }
+    </script>
+    <br/>
+</body>
+</html>

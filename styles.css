@@ -1,0 +1,103 @@
+a{
+  color: white;
+}
+
+#masthead{
+  background: transparent; 
+  margin-bottom:0; 
+  height: 300px;
+}
+
+.sliderCaption{
+  font-size: 20px;
+}
+
+#renderer{
+  z-index: -1;
+  position: relative;
+}
+
+#container{
+  width: 100%; 
+  position: absolute; 
+  height: 300px; 
+  top: 0px; 
+  left: 0px; 
+  padding: 0; 
+  margin: 0;
+}
+
+.carousel-inner img {
+  width: 100%;
+  height: 100%;
+}
+
+#can{
+  width: 100%; 
+  height: 300px; 
+  position: absolute; 
+  background-color: lightgrey; 
+  top: 0px; 
+  left: 0px;
+}
+
+#headerControl{
+  padding-top: 80px;
+}
+
+#headerControl .col-sm4{
+  width: 30%;
+}
+
+#controller svg{
+  width: 75px;
+  height: 60px;
+}
+
+#colorPallet{
+  padding-left: 20px;
+  display: block;
+}
+
+.swatch{
+  margin: 0 auto;
+  margin-left: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 100%;
+  display: inline-block;
+}
+
+#cyan{
+  background-color: cyan;
+}
+
+#magenta{
+  background-color: magenta;
+}
+
+#yellow{
+  background-color: yellow;
+}
+
+#black{
+  background-color: black;
+}
+
+#plus{
+  background-color: white;
+}
+
+#aboutMeSlider{
+  width: 100%;
+}
+
+#footer{
+  margin-bottom:0;
+  background-color: black;
+}
+
+#footer p{
+  line-height: 2em;
+  font-size: 2em;
+}

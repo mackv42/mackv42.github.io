@@ -1,0 +1,44 @@
+*{
+	color: purple;
+}
+p{
+	color: white;
+}
+
+h3{
+	color: orange;
+	-webkit-animation-name: example;
+	-webkit-animation-duration: 1s;
+	animation-name: example;
+	animation-duration: 1s;
+}
+
+
+@-webkit-keyframes colorFade {
+  from {color: yellow;}
+  to {color: purple;}
+  
+}
+
+/* Standard syntax */
+@keyframes colorFade {
+  from {color: yellow;}
+  to {color: purple;}
+}
+
+/* Safari 4.0 - 8.0 */
+@-webkit-keyframes example {
+  from {color: white;}
+  to {color: orange;}
+  
+}
+
+/* Standard syntax */
+@keyframes example {
+  from {color: white;}
+  to {color: orange;}
+}
+.item.active img{
+	width: 100%;
+	max-height: 520px;
+}

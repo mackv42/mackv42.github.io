@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#lineCanvas{
+			position: absolute;
+			left: 3px;
+			top: 3px;
+			background-color: lightgreen;
+			z-index: -1;
+		}
+
+		#cycleCanvas{
+			position: absolute;
+			left: 3px;
+			top: 3px;
+		}
+	</style>
+
+	<title>Tron</title>
+</head>
+
+<body>
+	<canvas id='cycleCanvas' width='600px' height='600px'></canvas>
+	<canvas id='lineCanvas' width='600px' height='600px'></canvas>
+	<h3 id='gameTxt'></h3> <!-- Could make this an interesting font -->
+
+	<script type='text/javascript'>
+		var clicked = false;
+
+		var canvas = document.getElementById('lineCanvas');
+		var ctx = canvas.getContext('2d');
+
+		directionEnum = {
+			WEST : 0,
+			NORTH : 1,
+			EAST : 2,
+			SOUTH : 3
+		}
+
+		function clear(){
+
+		}
+
+		function drawBox(x, y, width, color){
+			ctx.beginPath();
+			ctx.rect(x, y, width, width);
+			ctx.fillStyle = color;
+			ctx.fill();
+			ctx.closePath();
+		}
+
+		var Line = function(x1, y1, x2, y2){
+
+			this.x1 = x1;
+			this.y1 = y1;
+			this.x2 = x2;
+			this.y2 = y2;
+		}
+
+		function checkCollision(cycle, line){
+			//is line horizontal or vertical
+			if(line.x1 == line.x2){
+				if(cycle.x == line.x1){ 
+					if(line.y2 > line.y1){ //up or down
+						if(cycle.y <= line.y2 && cycle.y >= line.y1){
+							return true;
+						}
+					} else{
+						if(cycle.y <= line.y1 && cycle.y >= line.y2){
+							return true;
+						}
+					}
+				}
+			} else{
+				if(cycle.y == line.y1){
+					if(line.x2 > line.x1){ // left or right
+						if(cycle.x <= line.x2 && cycle.x >= line.x1){
+							return true;
+						}
+					} else{
+						if(cycle.x <= line.x1 && cycle.x >= line.x2){
+							return true;
+						}
+					}
+				}
+			}
+			return false;
+		}
+
+
+		var tronCycle = function(x, y, color, b1, b2, dir){
+			this.x = x;
+			this.y = y;
+			this.color = color;
+
+			this.b1 = b1;
+			this.b2 = b2;
+			//Add Keyboard Event Listener for b1 and b2
+			this.dir = dir;
+			this.lineList = [new Line(x, y, x, y)];
+			// SO CLOSE!!!!
+
+			/*
+			document.addEventListener("keyup", function(event){
+                    switch(event.keyCode){
+                       case b1.charAt(0):
+                          if(this.dir == 0){
+                          	this.dir = 3;
+                          } else{
+                          	this.dir--;
+                          }
+                          console.log(this.dir);
+                          break;
+                       case b2.charAt(0):
+                          if(this.dir == 3){
+                            this.dir = 0;
+                          } else{
+                          	this.dir++;
+                          }
+                          console.log(this.dir);
+                          break;
+
+                    	default:
+                    		break;
+                    }
+            });*/
+		}
+
+		tronCycle.prototype.draw = function(){
+
+		}
+
+		tronCycle.prototype.update = function(){
+			switch(this.dir){ 
+				case directionEnum.WEST:
+					this.x -= 4;
+					this.lineList[this.lineList.length-1].x2 -= 4;
+					break;
+
+				case directionEnum.NORTH:
+					this.y -= 4;
+					this.lineList[this.lineList.length-1].y2 -= 4;
+					break;
+
+				case directionEnum.EAST:
+					this.x += 4;
+					this.lineList[this.lineList.length-1].x2 += 4;
+					break;
+
+				case directionEnum.SOUTH:
+					this.y += 4;
+					this.lineList[this.lineList.length-1].y2 += 4;
+					break;
+
+				default:
+					break;
+			}
+			drawBox(this.x, this.y, 4, this.color);
+		}
+
+		var p1 = new tronCycle(0, 0, "#FF0000", "A", "S", directionEnum.SOUTH);
+		var p2 = new tronCycle(596, 596, "#0000FF", "K", "L", directionEnum.NORTH);
+
+		function checkCollisions(){
+			for(let i=0; i<p1.lineList.length; i++){
+				if(checkCollision(p1, p1.lineList[i]) && i < p1.lineList.length-1){
+					return 1;
+				}
+
+				if(checkCollision(p2, p1.lineList[i])){
+					return 2;
+				}
+			}
+
+			for(let n=0; n<p2.lineList.length; n++){
+				if(checkCollision(p1, p2.lineList[n])){
+					return 1;
+				}
+
+				if(checkCollision(p2, p2.lineList[n]) && n < p2.lineList.length-1){
+					return 2;
+				}
+			}
+
+			return 0;
+		}
+			
+			// put this in tronCycle constructor
+			document.addEventListener("keyup", function(event){
+					var keyPressed = String.fromCharCode(event.keyCode);
+                    switch(keyPressed){
+                       case p1.b1:
+                          if(p1.dir == 0){
+                          	p1.dir = 3;
+                          } else{
+                          	p1.dir--;
+                          }
+
+                          p1.lineList.push(new Line(p1.x, p1.y, p1.x, p1.y));
+                          break;
+                       case p1.b2:
+                          if(p1.dir == 3){
+                            p1.dir = 0;
+                          } else{
+                          	p1.dir++;
+                          }
+                          p1.lineList.push(new Line(p1.x, p1.y, p1.x, p1.y));
+                          break;
+
+                    	default:
+                    		break;
+
+                    	case p2.b1:
+                    	  if(p2.dir == 0){
+                            p2.dir = 3;
+                          } else{
+                          	p2.dir--;
+                          }
+
+                          p2.lineList.push(new Line(p2.x, p2.y, p2.x, p2.y));
+                          break;
+
+                        case p2.b2:
+                    	  if(p2.dir == 3){
+                            p2.dir = 0;
+                          } else{
+                          	p2.dir++;
+                          }
+
+                          p2.lineList.push(new Line(p2.x, p2.y, p2.x, p2.y));
+                          break;
+                    }
+            });
+
+		var collisionStatus = 0;
+		function start(){
+			if(!clicked){
+				clicked = true;
+
+				function gameLoop(){
+					setTimeout(function loop(){requestAnimationFrame(gameLoop)}, 9);
+					p1.update();
+					p2.update();
+
+					collisionStatus = checkCollisions();
+
+					if(collisionStatus == 1){
+						alert("Player 1 Lost!");
+						return;
+					}
+
+					if(collisionStatus == 2){
+						alert("Player 2 Lost!");
+						return;
+					}
+
+				}
+
+				gameLoop();
+			}
+		}
+		start();
+
+	</script>
+</body>
+</html>

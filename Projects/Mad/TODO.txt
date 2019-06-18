@@ -1,0 +1,7 @@
+Make it generally look nice
+--------------------------------------------------
+Words AutoComplete
+--------------------------------------------------
+Words Guess Appropriate
+--------------------------------------------------
+Drag & Drop Feature

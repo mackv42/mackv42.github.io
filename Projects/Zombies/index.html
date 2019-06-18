@@ -1,0 +1,77 @@
+<!-- Proto for regular perspective -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Zombie Center</title>
+	<style>
+		#can{
+			background-color: lightblue;
+            z-index: -3;
+            margin: 0 auto;
+            display: block;
+		}
+
+        #menu{
+            background-color: orange;
+            display: block;
+            margin: 0 auto;
+
+            width: 800px;
+            height: 75px;
+        }
+
+        span{
+            color: purple;
+        }
+
+        #divider{
+            margin-top: 0px;
+        }
+
+        #menu-title{
+            text-align: center;
+            padding-top: 3px;
+            margin-bottom: 0px;
+        }
+
+        #menu p{
+            display: inline-block;
+            margin: 0 auto;
+        }
+
+        
+	</style>
+	<script type="text/javascript">
+		var RAD = Math.PI / 180;
+        var ninety = .5*Math.PI;
+        var lose = false;
+
+        function getRandomArbitrary(min, max){
+            return Math.floor(Math.random() * (max - min) + min);
+        }
+	</script>
+
+    <script src='../utils.js'></script>
+    <script src='../../VirtualJoystick.js'></script>
+</head>
+<body>
+    
+	<canvas id="can" width="800" height="480"></canvas>
+    
+    <div id="menu">
+        <h3 id="menu-title">Menu</h3>
+        <hr id="divider"></hr>
+        <p><b>Health: <span id="health"></span></b></p>
+        <p><b>Ammo: <span id="ammo"></span></b></p>
+        <p><b>Zombies: <span id='zombies'></span></b></p>
+        <span style='float: right'>
+	        <input type="button" id='pause' value='Pause'></input>&nbsp
+	        <input type='button' id='reset' value='Reset'></input>
+            <input type='button' value='shoot' onclick='p1.shoot()'></input>
+        </span>
+    </div>
+
+
+    <script src='game.js'></script>
+</body>
+</html>

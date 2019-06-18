@@ -1,0 +1,19 @@
+*{
+	text-align: center;
+	font-family: courier;
+}
+body{
+	background-color: lightblue;
+}
+#phone{
+	padding-right: 100px;
+}
+#sec1{
+	margin: 0 auto;
+	margin-right: 75px;
+	display: inline-block;
+}
+#sec2{
+	margin: 0 auto;
+	display: inline-block;
+}

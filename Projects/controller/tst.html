@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Joystick test</title>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	
+</head>
+
+<body>
+	<div id="joystick" v-on:click='click'>
+	  <span v-if='seen'>Hello Vue</span>
+	  <svg @click="startJoystick">
+	  	<g ref="centerCircle"/>
+	  </svg>
+	</div>
+	<script src="joystick.js"></script>
+</body>
+</html>
