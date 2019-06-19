@@ -8,6 +8,20 @@ body{
 #phone{
 	padding-right: 100px;
 }
+
+@media only screen and (max-width: 600px) {
+  #phone {
+    padding-right: 0px;
+  }
+
+  #sec1{
+  	margin-right: 0px;
+  }
+  #sec1 h3{
+  	text-align: center;
+  }
+}
+
 #sec1{
 	margin: 0 auto;
 	margin-right: 75px;

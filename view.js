@@ -62,14 +62,14 @@ function ellipsoid (latitudeBands, longitudeBands, a, b, c, size) {
     return ellipsoidgeometry;
 }
 
-var materials =  new Array(7);
+var materials =  new Array();
 materials.push(new THREE.MeshBasicMaterial( { color: 0xff0000, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0x00ff00, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0x0000ff, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0xaaaa00, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0x0aaaa0, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0x00aaaa, wireframe: false } ));
-materials.push(new THREE.MeshBasicMaterial( { color: 0xae1000, wireframe: false } ));
+materials.push(new THREE.MeshBasicMaterial( { color: 0xaa00aa, wireframe: false } ));
 materials.push(new THREE.MeshBasicMaterial( { color: 0x1000ae, wireframe: false } ));
 
 
@@ -82,7 +82,7 @@ spheres = new THREE.Object3D();
 var update = function(){
     var e = new Array(150);
     for(var i=0; i<e.length; i++){
-        e[i] = new THREE.Mesh(ellipsoid(10, 10, 3, 3, 20, .3), materials[Math.floor(getRandomArbitrary(0, 7))]);
+        e[i] = new THREE.Mesh(ellipsoid(10, 10, 3, 3, 20, .3), materials[Math.floor(getRandomArbitrary(0, materials.length))]);
         e[i].position.x = (Math.random() - 0.5) * 90;
         e[i].position.y = (Math.random() - 0.5) * 90;
         e[i].position.z = (Math.random() - 0.5) * 40;
