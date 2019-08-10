@@ -74,6 +74,7 @@ function latLongToMiles(pos1, pos2){
 	Lat_end = pos2.latitude;
 	Long_start = pos1.longitude;
 	Long_end = pos2.longitutde;
+	//if going a certain direction
 	return ACOS(SIN(PI()*[Lat_start]/180.0)*SIN(PI()*[Lat_end]/180.0)+COS(PI()*[Lat_start]/180.0)*COS(PI()*[Lat_end]/180.0)*COS(PI()*[Long_start]/180.0-PI()*[Long_end]/180.0))*3963 - 4260.09837987635546597;
 }
 
@@ -82,7 +83,7 @@ function success(pos) {
   positionArray.push(pos.coords);
   if(tmp){
   	distanceTraveled += latLongToMiles(positionArray[positionArray.length-2], positionArray[positionArray.length-1]);
-  	demo.innerHTML += distanceTraveled + "<br/>";
+  	demo.innerHTML += distanceTraveled + " " + pos.speed + "meters/second" + "<br/>";
 	}
   tmp = true;
   console.log(pos.coords);
@@ -104,6 +105,7 @@ target = {
 options = {
   enableHighAccuracy: true,
   timeout: 60000,
+  speed: true,
   maximumAge: 0
 };
 
