@@ -53,11 +53,35 @@ function getDistance(arr){
 
 var tmp = false;
 
+function SIN( n ){
+	return Math.sin(n);
+}
+
+function ACOS( n ){
+	return Math.acos(n);
+}
+
+function COS( n ){
+	return Math.cos(n);
+}
+
+function PI(){
+	return Math.PI;
+}
+
+function latLongToMiles(pos1, pos2){
+	Lat_start = pos1.latitude;
+	Lat_end = pos2.latitude;
+	Long_start = pos1.longitude;
+	Long_end = pos2.longitutde;
+	return ACOS(SIN(PI()*[Lat_start]/180.0)*SIN(PI()*[Lat_end]/180.0)+COS(PI()*[Lat_start]/180.0)*COS(PI()*[Lat_end]/180.0)*COS(PI()*[Long_start]/180.0-PI()*[Long_end]/180.0))*3963 - 4260.09837987635546597;
+}
+
 function success(pos) {
   var crd = pos.coords;
   positionArray.push(pos.coords);
   if(tmp){
-  	distanceTraveled += distance(positionArray[positionArray.length-2], positionArray[positionArray.length-1]);
+  	distanceTraveled += latLongToMiles(positionArray[positionArray.length-2], positionArray[positionArray.length-1]);
   	demo.innerHTML += distanceTraveled + "<br/>";
 	}
   tmp = true;
