@@ -31,26 +31,10 @@
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		var ctx = canvas.getContext("2d");
-		var RAD = Math.PI / 180;
-		var ninety = .5*Math.PI;
+		var points = 0;
 
 		function getRandomArbitrary(min, max){
 		    return Math.floor(Math.random() * (max - min) + min);
-		}
-
-		function direction(dx, dy){
-		    let dir = 0;
-		    if(dx > 0){
-		        dir = -(Math.atan(dx/dy));
-
-		        if(dy < 0){
-		            dir = dir+Math.PI;
-		        }
-		    } else{
-		        dir = Math.atan(dy/dx) + .5*Math.PI;
-		    }
-
-		    return dir;
 		}
 
 
@@ -135,12 +119,18 @@
         var box = new Box(randx, randy, 80, 80, "#00FF00");
         console.log(scale);
 
+        function draw(){
+        	box.draw();
+        	ctx.font = "30px Arial";
+        	ctx.fillText(points, 40, 40);
+        }
+
         function moveBox(){
         	box.x = getRandomArbitrary(0, canvas.width - 80);
 	    	box.y = getRandomArbitrary(0, canvas.height - 80);
 
 	    	clear();
-	    	box.draw();
+	    	draw();
         }
 
         function handler(event){ 
@@ -150,6 +140,7 @@
 	    	clicker.y = y;
 	    	console.log(clicker.x + ", " + clicker.y);
 	    	if(InBounds(x, y, box)){
+	    		points++;
 	    		moveBox();
 	    		console.log("clicked!")
 	    	}
@@ -159,13 +150,13 @@
 	    	console.log(center);
 
 	    	if(distance([x, y], [center[0], center[1]]) <= 50){
-	    		moveBox()
+	    		moveBox();
+	    		points++;
 	    	}
 	    }
 
 	    canvas.addEventListener("mousedown", handler);
-	    box.draw();
-
+	    draw();
 	    function handleResize(){
 	
 		    c_pos = canvas.getBoundingClientRect();
