@@ -11,11 +11,13 @@
 			top: 0px;
 			bottom: 0px;
 			background-color: black;
+			overflow: hidden;
 		}
 
 		body{
 			margin: 0px;
 			padding: 0px;
+			overflow: hidden;
 		}
 	</style>
 </head>
@@ -124,16 +126,16 @@
         }
 
         var clicker = new Box(0, 0, 10, 10, "#000000");
-        var randx = getRandomArbitrary(0, canvas.width - 20);
-        var randy = getRandomArbitrary(0, canvas.height - 20);
+        var randx = getRandomArbitrary(0, canvas.width - 80);
+        var randy = getRandomArbitrary(0, canvas.height - 80);
         console.log(randx + ", " + randy);
         console.log(scale);
         var box = new Box(randx, randy, 80, 80, "#00FF00");
         console.log(scale);
 
         function moveBox(){
-        	box.x = getRandomArbitrary(0, canvas.width - 20);
-	    	box.y = getRandomArbitrary(0, canvas.height - 20);
+        	box.x = getRandomArbitrary(0, canvas.width - 80);
+	    	box.y = getRandomArbitrary(0, canvas.height - 80);
 
 	    	clear();
 	    	box.draw();
@@ -160,8 +162,8 @@
 		    c_x = c_pos.left;
 		    c_y = c_pos.top;
 		    scale = window.devicePixelRatio + window.innerWidth/300;
-		    		canvas.width = window.innerWidth * scale;
-		canvas.height = window.innerHeight * scale;
+		    		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 		    moveBox();
 		}
 
