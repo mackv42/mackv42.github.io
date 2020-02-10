@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style>
+		#can{
+			width: 100%;
+			top: 0px;
+			bottom: 0px;
+			background-color: black;
+		}
+
+		body{
+			margin: 0px;
+			padding: 0px;
+		}
+	</style>
+</head>
+
+<body>
+	<canvas id="can" width="100%"></canvas>
+
+
+	<script type='text/javascript'>
+		var canvas = document.getElementById("can");
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+		var ctx = canvas.getContext("2d");
+		var RAD = Math.PI / 180;
+		var ninety = .5*Math.PI;
+
+		function getRandomArbitrary(min, max){
+		    return Math.floor(Math.random() * (max - min) + min);
+		}
+
+		function direction(dx, dy){
+		    let dir = 0;
+		    if(dx > 0){
+		        dir = -(Math.atan(dx/dy));
+
+		        if(dy < 0){
+		            dir = dir+Math.PI;
+		        }
+		    } else{
+		        dir = Math.atan(dy/dx) + .5*Math.PI;
+		    }
+
+		    return dir;
+		}
+
+
+		var c_pos = canvas.getBoundingClientRect();
+		var c_x = c_pos.left;
+		var c_y = c_pos.top;
+
+		function handleResize(){
+		    c_pos = canvas.getBoundingClientRect();
+		    c_x = c_pos.left;
+		    c_y = c_pos.top;
+		}
+
+		function clear(){
+		    ctx.clearRect(0, 0, canvas.width, canvas.height);
+		}
+
+		function inbetween(p1, p2, n){
+            if(n >= p1 && n <= p2){
+              return true;
+            }
+            
+            return false;
+        }
+
+	    function collision(shape1, shape2){ //make sure to use as little shape, big shape
+            if(inbetween(shape2.x, shape2.x + shape2.width, shape1.x)){
+                
+            } else if(inbetween(shape2.x, shape2.x + shape2.width, shape1.x + shape1.width)){
+                
+            } else{
+               return false;
+            }
+            
+            if(inbetween(shape2.y, shape2.y + shape2.height, shape1.y)){
+               
+            } else if(inbetween(shape2.y, shape2.y + shape2.height, shape1.y + shape1.height)){
+                
+            } else{
+               return false;
+            }
+            
+            return true;
+        }
+
+        var Box = function(x, y, width, height, color){
+        	this.x = x;
+        	this.y = y;
+        	this.width = width;
+        	this.height = height;
+        	this.color = color;
+        }
+
+        Box.prototype.draw = function(){
+            ctx.beginPath();
+            ctx.rect(this.x, this.y, this.width, this.height);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+            ctx.closePath();
+        };
+
+        var clicker = new Box(0, 0, 5, 5, "#000000");
+        var randx = getRandomArbitrary(0, canvas.width - 20);
+        var randy = getRandomArbitrary(0, canvas.height - 20);
+        console.log(randx + ", " + randy);
+        var box = new Box(randx, randy, 20, 20, "#00FF00");
+
+        function handler(event){ 
+	  		var x = event.clientX - c_x;
+	    	var y = event.clientY - c_y;
+	    	clicker.x = x+3;
+	    	clicker.y = y+3;
+	    	console.log(x + ", " + y);
+	    	if(collision(clicker, box)){
+	    		box.x = getRandomArbitrary(0, canvas.width - 20);
+	    		box.y = getRandomArbitrary(0, canvas.height - 20);
+	    		console.log("clicked!")
+	    	}
+
+	    	clear();
+	    	box.draw();
+	    }
+
+	    canvas.addEventListener("mousedown", handler);
+	    box.draw();
+	</script>
+</body>
+</html>
