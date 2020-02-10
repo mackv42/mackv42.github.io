@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+
 	<title></title>
 	<style>
 		#can{
@@ -19,10 +22,10 @@
 
 <body>
 	<canvas id="can" width="100%"></canvas>
-
-
 	<script type='text/javascript'>
 		var canvas = document.getElementById("can");
+		var scale = window.devicePixelRatio + window.innerWidth/300;
+
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 		var ctx = canvas.getContext("2d");
@@ -53,11 +56,7 @@
 		var c_x = c_pos.left;
 		var c_y = c_pos.top;
 
-		function handleResize(){
-		    c_pos = canvas.getBoundingClientRect();
-		    c_x = c_pos.left;
-		    c_y = c_pos.top;
-		}
+
 
 		function clear(){
 		    ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -91,6 +90,13 @@
             return true;
         }
 
+        function InBounds(x, y, shape){
+        	if(inbetween(shape.x, shape.x + shape.width, x) && inbetween(shape.y, shape.y + shape.height, y)){
+        		return true;
+        	}
+        	return false;
+        }
+
         var Box = function(x, y, width, height, color){
         	this.x = x;
         	this.y = y;
@@ -107,30 +113,59 @@
             ctx.closePath();
         };
 
-        var clicker = new Box(0, 0, 5, 5, "#000000");
+        Box.prototype.center = function(){
+        	return [this.width/2 + this.x, this.height/2 + this.y];
+        }
+
+        function distance(p1, p2){
+        	dx = p1[0] - p2[0];
+        	dy = p1[1] - p2[1];
+        	return Math.sqrt(dx*dx + dy*dy);
+        }
+
+        var clicker = new Box(0, 0, 10, 10, "#000000");
         var randx = getRandomArbitrary(0, canvas.width - 20);
         var randy = getRandomArbitrary(0, canvas.height - 20);
         console.log(randx + ", " + randy);
-        var box = new Box(randx, randy, 20, 20, "#00FF00");
+        console.log(scale);
+        var box = new Box(randx, randy, 80, 80, "#00FF00");
+        console.log(scale);
+
+        function moveBox(){
+        	box.x = getRandomArbitrary(0, canvas.width - 20);
+	    	box.y = getRandomArbitrary(0, canvas.height - 20);
+
+	    	clear();
+	    	box.draw();
+        }
 
         function handler(event){ 
 	  		var x = event.clientX - c_x;
 	    	var y = event.clientY - c_y;
-	    	clicker.x = x+3;
-	    	clicker.y = y+3;
-	    	console.log(x + ", " + y);
-	    	if(collision(clicker, box)){
-	    		box.x = getRandomArbitrary(0, canvas.width - 20);
-	    		box.y = getRandomArbitrary(0, canvas.height - 20);
+	    	clicker.x = x;
+	    	clicker.y = y;
+	    	console.log(clicker.x + ", " + clicker.y);
+	    	if(InBounds(x, y, box)){
+	    		moveBox();
 	    		console.log("clicked!")
 	    	}
-
-	    	clear();
-	    	box.draw();
 	    }
 
 	    canvas.addEventListener("mousedown", handler);
 	    box.draw();
+
+	    function handleResize(){
+	
+		    c_pos = canvas.getBoundingClientRect();
+		    c_x = c_pos.left;
+		    c_y = c_pos.top;
+		    scale = window.devicePixelRatio + window.innerWidth/300;
+		    		canvas.width = window.innerWidth * scale;
+		canvas.height = window.innerHeight * scale;
+		    moveBox();
+		}
+
+		window.onresize = handleResize;
 	</script>
 </body>
 </html>
