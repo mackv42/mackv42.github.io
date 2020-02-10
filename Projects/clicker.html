@@ -122,6 +122,8 @@
         function distance(p1, p2){
         	dx = p1[0] - p2[0];
         	dy = p1[1] - p2[1];
+        	console.log(dx + ", " + dy);
+        	console.log()
         	return Math.sqrt(dx*dx + dy*dy);
         }
 
@@ -150,6 +152,14 @@
 	    	if(InBounds(x, y, box)){
 	    		moveBox();
 	    		console.log("clicked!")
+	    	}
+
+	    	var center = box.center();
+	    	console.log(box);
+	    	console.log(center);
+
+	    	if(distance([x, y], [center[0], center[1]]) <= 50){
+	    		moveBox()
 	    	}
 	    }
 
