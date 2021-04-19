@@ -44,7 +44,7 @@ signIn.onclick = function(evt){
 		}
 	}
 
-	axios.post("https://"+endpoint+"signin", data).then( function(response){
+	axios.post("https://"+"javascript-chess-7p9ri.ondigitalocean.app/api/users/"+"signin", data).then( function(response){
 		if(response.data.success){
 			signInData.token = response.data.token;
 			axios.get("https://javascript-chess-7p9ri.ondigitalocean.app/requireauth/getGame?token="+signInData.token).then( function(response){
