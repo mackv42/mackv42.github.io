@@ -75,4 +75,10 @@ function verify(token){
 	});
 }
 
+
+document.getElementById("signInQ").onclick = function(){
+	$("#signUpModal").modal('hide');
+	$("#signInModal").modal('show');
+}
+
 $("#signUpModal").modal("show");
