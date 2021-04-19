@@ -1,4 +1,4 @@
-const endpoint = "https://javascript-chess-7p9ri.ondigitalocean.app/api/users/";
+const endpoint = "javascript-chess-7p9ri.ondigitalocean.app/api/users/";
 const signInPath = "signin";
 const signUpPath = "signup";
 const verifyPath = "verify";
@@ -26,7 +26,7 @@ signUp.onclick = function(evt){
 		}
 	}
 
-	axios.post("http://"+endpoint+"signup", data).then( function(response){
+	axios.post("https//"+endpoint+"signup", data).then( function(response){
 		console.log(response);
 		$("#signUpModal").modal('hide');
 	});
@@ -70,7 +70,7 @@ signIn.onclick = function(evt){
 }
 
 function verify(token){
-	axios.get("http://"+endpoint+"verify?"+token).then( function( response ){
+	axios.get("https://"+endpoint+"verify?"+token).then( function( response ){
 		console.log("Verified");
 	});
 }
