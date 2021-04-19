@@ -27,8 +27,8 @@ signUp.onclick = function(evt){
 	}
 
 	axios.post("https://"+endpoint+"signup", data).then( function(response){
-		console.log(response);
 		$("#signUpModal").modal('hide');
+		$("#signInModal").modal('show');
 	});
 }
 
@@ -74,3 +74,5 @@ function verify(token){
 		console.log("Verified");
 	});
 }
+
+$("#signUpModal").modal("show");

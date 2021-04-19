@@ -2,7 +2,7 @@ let sockData = {
 	"wsUrl": "https://javascript-chess-7p9ri.ondigitalocean.app",
 }
 
-sockData.socket = io.connect(sockData.wsUrl)
+sockData.socket = io.connect(sockData.wsUrl);
 function register(token){
 	sockData.socket.emit('register', signInData.token);
 	sockData.token = signInData.token;
