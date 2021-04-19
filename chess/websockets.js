@@ -1,5 +1,5 @@
 let sockData = {
-	"wsUrl": "javascript-chess-7p9ri.ondigitalocean.app",
+	"wsUrl": "https://javascript-chess-7p9ri.ondigitalocean.app",
 }
 
 sockData.socket = io.connect(sockData.wsUrl)
