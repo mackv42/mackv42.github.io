@@ -12,8 +12,8 @@ function register(token){
 			if(response.data.success){
 				currentBoard = response.data.board;
 				currentBoard.playerColor = response.data.playerColor;
+				Clear();
 				RenderBoard(response.data.board);
-			
 			}
 		});
 	});

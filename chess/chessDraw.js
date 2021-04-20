@@ -6,7 +6,6 @@ function subtract2d(x1, y1, x2, y2){
 var canvas = document.getElementById("ChessBoard");
 var context = canvas.getContext("2d");
 var chessImg = new Image();
-var address = "https://javascript-chess-7p9ri.ondigitalocean.app";
 var endpoints = {"MakeMove": address+"/requireauth/makemove"};
 
 const squareWidth = 8;
