@@ -1,4 +1,4 @@
-const endpoint = "javascript-chess-7p9ri.ondigitalocean.app/api/users/";
+//const endpoint = "javascript-chess-7p9ri.ondigitalocean.app/api/users/";
 const signInPath = "signin";
 const signUpPath = "signup";
 const verifyPath = "verify";
@@ -51,8 +51,8 @@ signIn.onclick = function(evt){
 				if(response.data.success){
 					currentBoard = response.data.board;
 					currentBoard.playerColor = response.data.playerColor;
+					Clear();
 					RenderBoard(response.data.board);
-
 					register(signInData.token)
 				}
 			});
