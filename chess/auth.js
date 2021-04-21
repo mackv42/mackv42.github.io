@@ -26,7 +26,7 @@ signUp.onclick = function(evt){
 		}
 	}
 
-	axios.post(endpoint+"/signup", data).then( function(response){
+	axios.post(endpoint+"/api/users/signup", data).then( function(response){
 		$("#signUpModal").modal('hide');
 		$("#signInModal").modal('show');
 	});
